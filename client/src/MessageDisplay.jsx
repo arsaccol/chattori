@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import Message from './Message';
+import Message from './Message.jsx';
 import api from './ClientApi';
 import ClientApi from './ClientApi';
 
