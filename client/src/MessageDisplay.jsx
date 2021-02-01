@@ -15,6 +15,10 @@ class MessageDisplay extends Component
     }
 
     componentDidMount() {
+        // TODO: fix problem where the "I am connected!" message shows up sometimes and sometimes doesn't
+        // this is likely due to asynchronicity of connection, which may or may not have properly taken place
+        // before we first render... I think it's something related to that
+
         this.api = new ClientApi({hostUrl: `ws:localhost`, hostPort: 3000})
         this.api.socket.on('message', (incomingMessage) => {
             const date = new Date()
@@ -22,13 +26,7 @@ class MessageDisplay extends Component
 
 
             this.setState((state, props) => ({
-                //messages: state.messages.concat({
-                //    text: message,
-                //    id: Math.floor(Math.random())
-                //})
-                
                 messages: [...state.messages, incomingMessage]
-                
             }))
         })
     }
@@ -43,7 +41,18 @@ class MessageDisplay extends Component
     {
         console.log(`Sending ping over!`)
         const date = new Date()
-        this.api.sendMessage(`Hi! This is a ping from ${this.api.socket.id} made at ${date.toLocaleString()} (${date.getMilliseconds()} ms)`)
+        const outgoingMessageText = `Hi! This is a ping from ${this.api.socket.id} made at ${date.toLocaleString()} (${date.getMilliseconds()} ms)`
+        const outgoingMessage = {
+            id: this.api.socket.id,
+            time: Date.now(),
+            text: outgoingMessageText
+        }
+
+        this.api.sendMessage(outgoingMessageText)
+
+        this.setState( (state, props) => ({
+            messages: [...state.messages, outgoingMessage]
+        }))
     }
 
 
