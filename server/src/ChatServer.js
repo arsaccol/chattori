@@ -63,14 +63,16 @@ class ChatServer
     getEventListeners(socket) 
     {
         return {
-            'message': (message) => {
-                console.log(`[${new Date().toLocaleString()}] New message: "${message}"`)
+            'message': (messageText) => {
+                console.log(`[${new Date().toLocaleString()}] New message: "${messageText}"`)
 
-                this.state.messages.push({
+                const message = {
                     time: Date.now(),
                     id: socket.id,
-                    message: message
-                })
+                    text: messageText
+                }
+
+                this.state.messages.push(message)
 
                 //socket.broadcast(
                 socket.broadcast.emit('message', message)

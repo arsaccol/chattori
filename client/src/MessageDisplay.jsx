@@ -16,9 +16,9 @@ class MessageDisplay extends Component
 
     componentDidMount() {
         this.api = new ClientApi({hostUrl: `ws:localhost`, hostPort: 3000})
-        this.api.socket.on('message', (message) => {
+        this.api.socket.on('message', (incomingMessage) => {
             const date = new Date()
-            console.log(`[${date.toLocaleString()} (${date.getMilliseconds()}) ms] Got message: ${message}`)
+            console.log(`[${date.toLocaleString()} (${date.getMilliseconds()}) ms] Got message: ${incomingMessage}`)
 
 
             this.setState((state, props) => ({
@@ -27,11 +27,7 @@ class MessageDisplay extends Component
                 //    id: Math.floor(Math.random())
                 //})
                 
-                messages: [...state.messages, {
-                    // TODO: fix this, should pass id from server
-                    id: Math.ceil(Math.random()),
-                    text: message
-                }]
+                messages: [...state.messages, incomingMessage]
                 
             }))
         })
@@ -57,8 +53,7 @@ class MessageDisplay extends Component
                 <div className="ConnectionStatus">Nevermind me</div>
                 <ul> {
                     this.state.messages.map(msg => {
-                        //return 
-                        return <li key={msg.id}>
+                        return <li key={msg.id+msg.time}>
                             <Message text={msg.text}></Message>
                         </li>
                     })
