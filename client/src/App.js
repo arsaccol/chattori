@@ -1,6 +1,5 @@
 import logo from './logo.svg';
 import './App.css';
-import Message from './Message.js';
 import MessageDisplay from './MessageDisplay.jsx';
 
 function App() {
