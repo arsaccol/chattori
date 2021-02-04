@@ -57,15 +57,35 @@ class SocketProvider extends Component
         }))
     }
 
-    sendMessage = (message) => {
-        const outgoingMessage = { ...message }
+    sendMessage = (messageText) => 
+    {
+        console.log(`Sending message over!`)
+        const date = new Date()
+        const outgoingMessageText = messageText
+        const outgoingMessage = {
+            id: this.api.socket.id,
+            time: Date.now(),
+            text: outgoingMessageText
+        }
+
+        this.api.sendMessage(outgoingMessageText)
+
+        this.setState( (state, props) => ({
+            messages: [...state.messages, outgoingMessage]
+        }))
+
     }
 
 
     render()
     {
         return (
-            <Provider value={{api: this.api, messages:this.state.messages, sendPing:this.sendPing}}>
+            <Provider value={{
+                api: this.api, 
+                messages:this.state.messages, 
+                sendPing:this.sendPing, 
+                sendMessage:this.sendMessage
+            }}>
             {this.props.children}
             </Provider>
         )

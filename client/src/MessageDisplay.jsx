@@ -2,6 +2,8 @@ import { Component } from 'react';
 import Message from './Message.jsx';
 import SocketContext from './SocketContext.jsx'
 
+import MessageForm from './MessageForm.jsx'
+
 
 
 
@@ -20,8 +22,11 @@ class MessageDisplay extends Component
     {
         return (
             <div className="MessageDisplay">
-                <div className="ConnectionStatus">Nevermind me</div>
                 <h1> hello there fellers </h1>
+
+                <div className="ConnectionStatus">
+                    Nevermind me, I should be telling you whether there's a connection but I'm not
+                </div>
             
                 <ul> {
                     this.context.messages.map(msg => {
@@ -31,6 +36,9 @@ class MessageDisplay extends Component
                     })
                 }
                 </ul>
+
+                <MessageForm></MessageForm>
+
 
                 
 
