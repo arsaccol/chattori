@@ -1,8 +1,5 @@
 import { Component } from 'react';
 import Message from './Message.jsx';
-import api from './ClientApi';
-import ClientApi from './ClientApi';
-
 import SocketContext from './SocketContext.jsx'
 
 
@@ -34,6 +31,8 @@ class MessageDisplay extends Component
                     })
                 }
                 </ul>
+
+                
 
                 <button className="PingButton" onClick={this.context.sendPing}>
                     Send ping!
