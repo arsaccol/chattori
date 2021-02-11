@@ -27,7 +27,7 @@ class ChatServer
         this.socketsSetup()
         //this.registerCallbacks()
 
-        this.httpServer.listen(port)
+        this.httpServer.listen(port, '0.0.0.0')
     }
 
     // pass in express app after it's been initialized
