@@ -1,4 +1,4 @@
 import ChatServer from './ChatServer.js'
 
 
-const chatServ = new ChatServer({port: 3000})
+const chatServ = new ChatServer({port: process.env.PORT || 3000})
