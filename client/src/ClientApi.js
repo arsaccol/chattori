@@ -2,12 +2,11 @@ import { io } from 'socket.io-client'
 
 class ClientApi
 {
-    constructor({hostUrl, hostPort})
+    constructor({hostUrl})
     {
-        console.log(`Connecting client API to host ${hostUrl} at port ${hostPort}...`)
         this.hostUrl = hostUrl 
-        this.hostPort = hostPort 
-        this.socket = io('http://localhost:3000')
+        console.log(`Connecting client API at ${this.hostUrl}...`)
+        this.socket = io(`${this.hostUrl}`)
         this.socket.on('connect', this.onConnect)
 
         //this.socket = new io.Socket()

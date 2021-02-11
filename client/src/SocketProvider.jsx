@@ -12,10 +12,6 @@ class SocketProvider extends Component
         super(props)
         this.state = {
             messages: [
-                {
-                    id: 123123,
-                    text: `Hi, this is a message from the context`
-                }
             ]
         }
     }
@@ -23,7 +19,7 @@ class SocketProvider extends Component
 
     componentDidMount()
     {
-        this.api = new ClientApi({hostUrl: `ws://localhost`, hostPort: 3000})
+        this.api = new ClientApi( { hostUrl: process.env.REACT_APP_SOCKET_URL } )
         this.api.socket.on('message', (incomingMessage) => {
             const date = new Date()
             console.log(`[${date.toLocaleString()} (${date.getMilliseconds()}) ms] Got message: ${incomingMessage}`)
