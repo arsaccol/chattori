@@ -42,6 +42,12 @@ class ChatServer
             this.state.messages = []
             res.json({done: true})
         })
+        
+        app.get(`/diag`, async (req, res) => {
+            const connections = Array.from(await this.sockets.allSockets())
+            console.log(`[${new Date().toLocaleString()}] --- ${JSON.stringify({connections: connections}, null, 2)}`)
+            res.json({connections: connections})
+        })
     }
 
 
