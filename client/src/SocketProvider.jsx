@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ClientApi from './ClientApi.js';
+import API from './ClientApi.js';
 import SocketContext from './SocketContext.jsx'
 
 const { Provider } = SocketContext
@@ -14,12 +14,13 @@ class SocketProvider extends Component
             messages: [
             ]
         }
+        this.api = API
     }
 
 
     componentDidMount()
     {
-        this.api = new ClientApi( { hostUrl: process.env.REACT_APP_SOCKET_URL } )
+        //this.api = API
         this.api.socket.on('message', (incomingMessage) => {
             const date = new Date()
             console.log(`[${date.toLocaleString()} (${date.getMilliseconds()}) ms] Got message: ${incomingMessage}`)
@@ -34,6 +35,12 @@ class SocketProvider extends Component
     componentWillUnmount() {
         this.api.socket.disconnect()
     }
+
+    registerApiCallback(eventName, callback)
+    {
+        this.api.socket.on(eventName, callback)
+    }
+
 
     sendPing = () => 
     {
@@ -80,7 +87,8 @@ class SocketProvider extends Component
                 api: this.api, 
                 messages:this.state.messages, 
                 sendPing:this.sendPing, 
-                sendMessage:this.sendMessage
+                sendMessage:this.sendMessage,
+                registerApiCallback: this.registerApiCallback
             }}>
             {this.props.children}
             </Provider>

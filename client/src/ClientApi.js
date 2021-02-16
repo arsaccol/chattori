@@ -31,5 +31,10 @@ class ClientApi
 }
 
 
+const API = new ClientApi({ 
+    hostUrl: process.env.REACT_APP_SOCKET_URL
+})
 
-export default ClientApi
+export default API
+
+//export default ClientApi
